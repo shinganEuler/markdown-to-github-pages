@@ -113,7 +113,7 @@ function doGenerateGithubPages(folderPath, destDir) {
         const subFolders = [];
         for (const file of files) {
             const filePath = path.join(folderPath, file);
-            const stats = yield fs.stat(filePath);
+            const stats = fs.statSync(filePath);
             if (stats.isDirectory()) {
                 subFolders.push(filePath);
             }
