@@ -99,7 +99,7 @@ async function generateIndex(destDir) {
                 const level = line.split('#').length - 1;
                 const tocItem = line.trim().replace("#", "").trim();
                 const title = line.trim().replace(/-/g, '').replace(/[_\.\!\?\+=,$%^，。？、~@￥%……&*《》–<>「」{}【】()/\\\[\]'\":：’]/g, '-').replace(/ /g, '-');
-                const filePath = file.replace('.md', '');
+                const filePath = file.replace('.md', '').replace(path.join(destDir, ""), '');
                 tocItems.push(`${indentation.repeat(level - 1)}- [${tocItem}](${filePath}${title})`);
             }
         }
