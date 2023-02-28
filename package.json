@@ -3,5 +3,23 @@
     "@shd101wyy/mume": "^0.7.5",
     "os": "^0.1.2",
     "path": "^0.12.7"
-  }
+  },
+  "name": "markdown-to-github-pages",
+  "description": "Convert markdown files to github pages with katex support.",
+  "version": "1.0.0",
+  "main": "generate_html.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shinganEuler/markdown-to-github-pages.git"
+  },
+  "author": "shinganEuler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shinganEuler/markdown-to-github-pages/issues"
+  },
+  "homepage": "https://github.com/shinganEuler/markdown-to-github-pages#readme"
 }

@@ -26,7 +26,7 @@ async function findMarkdownFiles(dirPath) {
     }
 }
 
-async function generateToc(destDir) {
+async function generateIndex(destDir) {
     await findMarkdownFiles(destDir);
 
     const tocItems = [];
@@ -56,7 +56,6 @@ async function generateToc(destDir) {
         }
     }
 
-    // write to destDir
     await writeFile(path.join(destDir, 'index.md'), tocItems.join('\n'));
 }
 

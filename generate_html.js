@@ -20,7 +20,7 @@ function copyDirSync(src, dest) {
     });
 }
 
-async function generate_html(filePath, destDir) {
+async function generateHtml(filePath, destDir) {
     const engine = new mume.MarkdownEngine({
         filePath: filePath,
         config: {
@@ -39,10 +39,11 @@ async function generate_html(filePath, destDir) {
 
     const parentDir = path.dirname(filePath);
     if (fs.existsSync(parentDir)) {
-        copyDirSync(parentDir, destDir);
+        if (parentDir !== destDir) {
+            copyDirSync(parentDir, destDir);
+        }
     }
 
     return process.exit();
 }
 
-generate_html(process.argv[2], process.argv[3]);
