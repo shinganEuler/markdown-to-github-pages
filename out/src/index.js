@@ -124,7 +124,7 @@ function doGenerateGithubPages(folderPath, destDir) {
         for (const subFolder of subFolders) {
             const subFolderName = path.basename(subFolder);
             const subDestDir = path.join(destDir, subFolderName);
-            yield fs.mkdir(subDestDir, { recursive: true });
+            fs.mkdirSync(subDestDir, { recursive: true });
             yield doGenerateGithubPages(subFolder, subDestDir);
         }
     });
