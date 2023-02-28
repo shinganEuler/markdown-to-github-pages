@@ -124,10 +124,12 @@ function doGenerateGithubPages(folderPath, destDir) {
         }
         console.log(`subFolders: ${subFolders}`);
         for (const subFolder of subFolders) {
+            console.log(`subFolder begin: ${subFolder}`);
             const subFolderName = path.basename(subFolder);
             const subDestDir = path.join(destDir, subFolderName);
             fs.mkdirSync(subDestDir, { recursive: true });
             yield doGenerateGithubPages(subFolder, subDestDir);
+            console.log(`subFolder end: ${subFolder}`);
         }
     });
 }
