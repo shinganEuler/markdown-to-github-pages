@@ -111,11 +111,10 @@ function doGenerateGithubPages(folderPath, destDir) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log(`doGenerateGithubPages folderPath: ${folderPath} destDir: ${destDir}`);
         const files = fs.readdirSync(folderPath);
-        const subFolders = [];
+        const subFolders = Array();
         for (const file of files) {
             const filePath = path.join(folderPath, file);
             const stats = fs.statSync(filePath);
-            console.log(`filePath: ${filePath}`);
             if (stats.isDirectory()) {
                 subFolders.push(filePath);
             }
@@ -123,6 +122,7 @@ function doGenerateGithubPages(folderPath, destDir) {
                 yield generateHtml(filePath, destDir);
             }
         }
+        console.log(`subFolders: ${subFolders}`);
         for (const subFolder of subFolders) {
             const subFolderName = path.basename(subFolder);
             const subDestDir = path.join(destDir, subFolderName);

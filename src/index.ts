@@ -116,15 +116,14 @@ async function generateIndex(destDir) {
 
 async function doGenerateGithubPages(folderPath, destDir) {
     console.log(`doGenerateGithubPages folderPath: ${folderPath} destDir: ${destDir}`);
-    
+
     const files = fs.readdirSync(folderPath);
-    const subFolders = [];
+    const subFolders = Array<string>();
 
     for (const file of files) {
         const filePath = path.join(folderPath, file);
         const stats = fs.statSync(filePath);
 
-        console.log(`filePath: ${filePath}`);
         if (stats.isDirectory()) {
             subFolders.push(filePath);
         } else if (path.extname(filePath) === '.md') {
@@ -132,6 +131,7 @@ async function doGenerateGithubPages(folderPath, destDir) {
         }
     }
 
+    console.log(`subFolders: ${subFolders}`);
     for (const subFolder of subFolders) {
         const subFolderName = path.basename(subFolder);
         const subDestDir = path.join(destDir, subFolderName);
