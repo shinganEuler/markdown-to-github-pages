@@ -2,15 +2,15 @@
   "dependencies": {
     "@shd101wyy/mume": "^0.7.5",
     "os": "^0.1.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "typescript": "^4.9.5"
   },
   "name": "markdown-to-github-pages",
   "description": "Convert markdown files to github pages with katex support.",
-  "version": "1.0.2",
-  "main": "generate_html.js",
-  "devDependencies": {},
+  "version": "1.0.3",
+  "main": "./out/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc --project ."
   },
   "repository": {
     "type": "git",

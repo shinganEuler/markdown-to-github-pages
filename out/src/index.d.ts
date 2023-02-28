@@ -1,0 +1,14 @@
+declare const os: any;
+declare const fs: any;
+declare const path: any;
+declare const mume: any;
+declare const promisify: any;
+declare const readdir: any;
+declare const readFile: any;
+declare const writeFile: any;
+declare function copyDirSync(src: any, dest: any): void;
+declare function generateHtml(filePath: any, destDir: any): Promise<never>;
+declare const indentation: string;
+declare const markdownFiles: string[];
+declare function findMarkdownFiles(dirPath: any): Promise<void>;
+declare function generateIndex(destDir: any): Promise<void>;
