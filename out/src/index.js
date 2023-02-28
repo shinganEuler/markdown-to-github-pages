@@ -117,7 +117,7 @@ function generateGithubPages(srcDir, destDir) {
             fs.mkdirSync(destDir);
         }
         try {
-            const files = yield fs.readdir(srcDir);
+            const files = fs.readdirSync(srcDir);
             const mdFiles = files.filter(file => path.extname(file) === '.md');
             for (const mdFile of mdFiles) {
                 const filePath = path.join(srcDir, mdFile);

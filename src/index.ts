@@ -125,7 +125,7 @@ async function generateGithubPages(srcDir, destDir) {
     }
 
     try {
-        const files = await fs.readdir(srcDir);
+        const files = fs.readdirSync(srcDir);
         const mdFiles = files.filter(file => path.extname(file) === '.md');
 
         for (const mdFile of mdFiles) {
