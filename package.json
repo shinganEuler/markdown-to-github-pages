@@ -7,8 +7,8 @@
   },
   "name": "markdown-to-github-pages",
   "description": "Convert markdown files to github pages with katex support.",
-  "version": "1.0.3",
-  "main": "./out/index.js",
+  "version": "1.0.4",
+  "main": "./out/src/index.js",
   "scripts": {
     "build": "tsc --project ."
   },
