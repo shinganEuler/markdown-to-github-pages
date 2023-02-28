@@ -51,8 +51,6 @@ async function generateHtml(filePath, destDir) {
             copyDirSync(parentDir, destDir);
         }
     }
-
-    return process.exit();
 }
 
 const indentation = " ".repeat(2);
