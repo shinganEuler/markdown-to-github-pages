@@ -110,8 +110,34 @@ async function generateIndex(destDir) {
     if (!fs.existsSync(destDir)) {
         fs.mkdirSync(destDir);
     }
-    
+
     await writeFile(path.join(destDir, 'index.md'), tocItems.join('\n'));
+}
+
+async function generateGithubPages(srcDir, destDir) {
+    if (!fs.existsSync(srcDir)) {
+        console.error(`srcDir: ${srcDir} not exists`);
+        return;
+    }
+
+    if (!fs.existsSync(destDir)) {
+        fs.mkdirSync(destDir);
+    }
+
+    try {
+        const files = await fs.readdir(srcDir);
+        const mdFiles = files.filter(file => path.extname(file) === '.md');
+
+        for (const mdFile of mdFiles) {
+            const filePath = path.join(srcDir, mdFile);
+            await generateHtml(filePath, destDir);
+        }
+
+        await generateIndex(destDir);
+        await generateHtml(path.join(destDir, 'index.md'), destDir);
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 exports.generateIndex = generateIndex;

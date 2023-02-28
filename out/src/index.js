@@ -107,6 +107,30 @@ function generateIndex(destDir) {
         yield writeFile(path.join(destDir, 'index.md'), tocItems.join('\n'));
     });
 }
+function generateGithubPages(srcDir, destDir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!fs.existsSync(srcDir)) {
+            console.error(`srcDir: ${srcDir} not exists`);
+            return;
+        }
+        if (!fs.existsSync(destDir)) {
+            fs.mkdirSync(destDir);
+        }
+        try {
+            const files = yield fs.readdir(srcDir);
+            const mdFiles = files.filter(file => path.extname(file) === '.md');
+            for (const mdFile of mdFiles) {
+                const filePath = path.join(srcDir, mdFile);
+                yield generateHtml(filePath, destDir);
+            }
+            yield generateIndex(destDir);
+            yield generateHtml(path.join(destDir, 'index.md'), destDir);
+        }
+        catch (err) {
+            console.error(err);
+        }
+    });
+}
 exports.generateIndex = generateIndex;
 exports.generateHtml = generateHtml;
 //# sourceMappingURL=index.js.map
