@@ -75,6 +75,8 @@ async function findMarkdownFiles(dirPath) {
 }
 
 function generateId(heading: string): string {
+    this.table = {};
+
     const replacement = (match: string, capture: string): string => {
         let sanitized = capture
             .replace(/[!"#$%&'()*+,./:;<=>?@[\\]^`{|}~]/g, "")

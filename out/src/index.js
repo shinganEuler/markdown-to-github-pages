@@ -77,6 +77,7 @@ function findMarkdownFiles(dirPath) {
     });
 }
 function generateId(heading) {
+    this.table = {};
     const replacement = (match, capture) => {
         let sanitized = capture
             .replace(/[!"#$%&'()*+,./:;<=>?@[\\]^`{|}~]/g, "")
