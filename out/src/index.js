@@ -94,7 +94,7 @@ function generateIndex(destDir) {
                 if (line.startsWith('#')) {
                     const level = line.split('#').length - 1;
                     const tocItem = line.trim().replace(/#/g, '').trim();
-                    const title = line.trim().replace(/[\-\/#]/g, '').replace(/\./g, '').replace(/[_\.\!\?\+=,$%^，。？、~@￥%……&*《》–<>「」{}【】()/\\\[\]'\":：’]/g, '-').replace(/ /g, '-');
+                    const title = line.replace(/[\-\/#]/g, '').replace(/\./g, '').replace(/[_\.\!\?\+=,$%^，。？、~@￥%……&*《》–<>「」{}【】()/\\\[\]'\":：’\n]/g, '-').replace(/ /g, '-');
                     const filePath = file.replace('.md', '').replace(path.join(destDir, ""), '');
                     tocItems.push(`${indentation.repeat(level - 1)}- [${tocItem}](${filePath}${"#" + title})`);
                 }
