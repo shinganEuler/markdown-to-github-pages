@@ -26,6 +26,9 @@ function copyDirSync(src, dest) {
 }
 
 async function generateHtml(filePath, destDir) {
+    console.log(`generateHtml filePath: ${filePath}`);
+    console.log(`generateHtml destDir: ${destDir}`);
+
     const engine = new mume.MarkdownEngine({
         filePath: filePath,
         config: {
@@ -73,6 +76,8 @@ async function findMarkdownFiles(dirPath) {
 }
 
 async function generateIndex(destDir) {
+    console.log(`generateIndex destDir: ${destDir}`);
+
     await findMarkdownFiles(destDir);
 
     const tocItems = Array<string>();

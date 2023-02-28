@@ -33,6 +33,8 @@ function copyDirSync(src, dest) {
 }
 function generateHtml(filePath, destDir) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(`generateHtml filePath: ${filePath}`);
+        console.log(`generateHtml destDir: ${destDir}`);
         const engine = new mume.MarkdownEngine({
             filePath: filePath,
             config: {
@@ -76,6 +78,7 @@ function findMarkdownFiles(dirPath) {
 }
 function generateIndex(destDir) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(`generateIndex destDir: ${destDir}`);
         yield findMarkdownFiles(destDir);
         const tocItems = Array();
         for (const file of markdownFiles.sort()) {

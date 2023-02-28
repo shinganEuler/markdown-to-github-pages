@@ -12,4 +12,4 @@ npx json -I -f package.json -e "this.version=\"$NEW_VERSION\""
 # Output the new version number
 echo "New version: $NEW_VERSION"
 
-git pull && git add . && git commit -m "update" && git push && npm publish
+git pull && npm run build && npm publish && git add . && git commit -m "update" && git push
