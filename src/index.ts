@@ -122,6 +122,7 @@ async function doGenerateGithubPages(folderPath, destDir) {
         const filePath = path.join(folderPath, file);
         const stats = fs.statSync(filePath);
 
+        console.log(`filePath: ${filePath}`);
         if (stats.isDirectory()) {
             subFolders.push(filePath);
         } else if (path.extname(filePath) === '.md') {
