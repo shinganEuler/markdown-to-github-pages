@@ -131,6 +131,5 @@ function generateGithubPages(srcDir, destDir) {
         }
     });
 }
-exports.generateIndex = generateIndex;
-exports.generateHtml = generateHtml;
+exports.generateGithubPages = generateGithubPages;
 //# sourceMappingURL=index.js.map
