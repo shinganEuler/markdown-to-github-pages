@@ -26,8 +26,8 @@ async function findMarkdownFiles(dirPath) {
     }
 }
 
-async function generateToc() {
-    await findMarkdownFiles('.');
+async function generateToc(destDir) {
+    await findMarkdownFiles(destDir);
 
     const tocItems = [];
 
@@ -49,14 +49,14 @@ async function generateToc() {
             if (line.startsWith('#')) {
                 const level = line.split('#').length - 1;
                 const tocItem = line.trim().replace("#", "").trim();
-                const title = line.trim().replace(/-/g, '').replace(/[_\.\!\?\+=,$%^，。？、~@￥%……&*《》–<>「」{}【】()/\\\[\]'\":：’]/g, '-').replace(/ /g, '-');                
+                const title = line.trim().replace(/-/g, '').replace(/[_\.\!\?\+=,$%^，。？、~@￥%……&*《》–<>「」{}【】()/\\\[\]'\":：’]/g, '-').replace(/ /g, '-');
                 const filePath = file.replace('.md', '');
                 tocItems.push(`${indentation.repeat(level - 1)}- [${tocItem}](${filePath}${title})`);
             }
         }
     }
 
-    await writeFile('index.md', tocItems.join('\n'));
+    // write to destDir
+    await writeFile(path.join(destDir, 'index.md'), tocItems.join('\n'));
 }
 
-generateToc().then(() => console.log('Table of contents generated successfully.'));
