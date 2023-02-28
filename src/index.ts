@@ -114,6 +114,29 @@ async function generateIndex(destDir) {
     await writeFile(path.join(destDir, 'index.md'), tocItems.join('\n'));
 }
 
+async function doGenerateGithubPages(folderPath, destDir) {
+    const files = fs.readdirSync(folderPath);
+    const subFolders = [];
+
+    for (const file of files) {
+        const filePath = path.join(folderPath, file);
+        const stats = await fs.stat(filePath);
+
+        if (stats.isDirectory()) {
+            subFolders.push(filePath);
+        } else if (path.extname(filePath) === '.md') {
+            await generateHtml(filePath, destDir);
+        }
+    }
+
+    for (const subFolder of subFolders) {
+        const subFolderName = path.basename(subFolder);
+        const subDestDir = path.join(destDir, subFolderName);
+        await fs.mkdir(subDestDir, { recursive: true });
+        await doGenerateGithubPages(subFolder, subDestDir);
+    }
+}
+
 async function generateGithubPages(srcDir, destDir) {
     if (!fs.existsSync(srcDir)) {
         console.error(`srcDir: ${srcDir} not exists`);
@@ -125,14 +148,7 @@ async function generateGithubPages(srcDir, destDir) {
     }
 
     try {
-        const files = fs.readdirSync(srcDir);
-        const mdFiles = files.filter(file => path.extname(file) === '.md');
-
-        for (const mdFile of mdFiles) {
-            const filePath = path.join(srcDir, mdFile);
-            await generateHtml(filePath, destDir);
-        }
-
+        await doGenerateGithubPages(srcDir, destDir);
         await generateIndex(destDir);
         await generateHtml(path.join(destDir, 'index.md'), destDir);
     } catch (err) {

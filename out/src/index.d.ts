@@ -12,4 +12,5 @@ declare const indentation: string;
 declare const markdownFiles: string[];
 declare function findMarkdownFiles(dirPath: any): Promise<void>;
 declare function generateIndex(destDir: any): Promise<void>;
+declare function doGenerateGithubPages(folderPath: any, destDir: any): Promise<void>;
 declare function generateGithubPages(srcDir: any, destDir: any): Promise<void>;

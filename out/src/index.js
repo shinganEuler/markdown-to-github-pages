@@ -107,6 +107,28 @@ function generateIndex(destDir) {
         yield writeFile(path.join(destDir, 'index.md'), tocItems.join('\n'));
     });
 }
+function doGenerateGithubPages(folderPath, destDir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const files = fs.readdirSync(folderPath);
+        const subFolders = [];
+        for (const file of files) {
+            const filePath = path.join(folderPath, file);
+            const stats = yield fs.stat(filePath);
+            if (stats.isDirectory()) {
+                subFolders.push(filePath);
+            }
+            else if (path.extname(filePath) === '.md') {
+                yield generateHtml(filePath, destDir);
+            }
+        }
+        for (const subFolder of subFolders) {
+            const subFolderName = path.basename(subFolder);
+            const subDestDir = path.join(destDir, subFolderName);
+            yield fs.mkdir(subDestDir, { recursive: true });
+            yield doGenerateGithubPages(subFolder, subDestDir);
+        }
+    });
+}
 function generateGithubPages(srcDir, destDir) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!fs.existsSync(srcDir)) {
@@ -117,12 +139,7 @@ function generateGithubPages(srcDir, destDir) {
             fs.mkdirSync(destDir);
         }
         try {
-            const files = fs.readdirSync(srcDir);
-            const mdFiles = files.filter(file => path.extname(file) === '.md');
-            for (const mdFile of mdFiles) {
-                const filePath = path.join(srcDir, mdFile);
-                yield generateHtml(filePath, destDir);
-            }
+            yield doGenerateGithubPages(srcDir, destDir);
             yield generateIndex(destDir);
             yield generateHtml(path.join(destDir, 'index.md'), destDir);
         }
