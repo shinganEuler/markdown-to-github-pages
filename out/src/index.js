@@ -109,6 +109,7 @@ function generateIndex(destDir) {
 }
 function doGenerateGithubPages(folderPath, destDir) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(`doGenerateGithubPages folderPath: ${folderPath} destDir: ${destDir}`);
         const files = fs.readdirSync(folderPath);
         const subFolders = [];
         for (const file of files) {

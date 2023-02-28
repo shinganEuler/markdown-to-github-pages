@@ -115,6 +115,8 @@ async function generateIndex(destDir) {
 }
 
 async function doGenerateGithubPages(folderPath, destDir) {
+    console.log(`doGenerateGithubPages folderPath: ${folderPath} destDir: ${destDir}`);
+    
     const files = fs.readdirSync(folderPath);
     const subFolders = [];
 
