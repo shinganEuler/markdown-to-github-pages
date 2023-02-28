@@ -101,6 +101,9 @@ function generateIndex(destDir) {
                 }
             }
         }
+        if (!fs.existsSync(destDir)) {
+            fs.mkdirSync(destDir);
+        }
         yield writeFile(path.join(destDir, 'index.md'), tocItems.join('\n'));
     });
 }

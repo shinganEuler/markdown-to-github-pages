@@ -107,6 +107,10 @@ async function generateIndex(destDir) {
         }
     }
 
+    if (!fs.existsSync(destDir)) {
+        fs.mkdirSync(destDir);
+    }
+    
     await writeFile(path.join(destDir, 'index.md'), tocItems.join('\n'));
 }
 
