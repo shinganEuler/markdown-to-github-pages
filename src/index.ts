@@ -7,6 +7,7 @@ const { promisify } = require('util');
 const readdir = promisify(fs.readdir);
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
+const uslug = require("uslug");
 
 function copyDirSync(src, dest) {
     if (!fs.existsSync(dest)) {
@@ -73,6 +74,32 @@ async function findMarkdownFiles(dirPath) {
     }
 }
 
+function generateId(heading: string): string {
+    const replacement = (match: string, capture: string): string => {
+        let sanitized = capture
+            .replace(/[!"#$%&'()*+,./:;<=>?@[\\]^`{|}~]/g, "")
+            .replace(/^\s/, "")
+            .replace(/\s$/, "")
+            .replace(/`/g, "~");
+        return (
+            (capture.match(/^\s+$/) ? "~" : sanitized) +
+            (match.endsWith(" ") && !sanitized.endsWith("~") ? "~" : "")
+        );
+    };
+    heading = heading
+        .replace(/~|。/g, "") // sanitize
+        .replace(/``(.+?)``\s?/g, replacement)
+        .replace(/`(.*?)`\s?/g, replacement);
+    let slug = uslug(heading.replace(/\s/g, "~")).replace(/~/g, "-");
+    if (this.table[slug] >= 0) {
+        this.table[slug] = this.table[slug] + 1;
+        slug += "-" + this.table[slug];
+    } else {
+        this.table[slug] = 0;
+    }
+    return slug;
+}
+
 async function generateIndex(destDir) {
     console.log(`generateIndex destDir: ${destDir}`);
 
@@ -98,7 +125,8 @@ async function generateIndex(destDir) {
             if (line.startsWith('#')) {
                 const level = line.split('#').length - 1;
                 const tocItem = line.trim().replace(/#/g, '').trim();
-                const title = "#" + line.toLowerCase().replace(/[:：–\/#？\?]/g, '').replace(/\./g, '').replace(/[_\.\!\+=,$%^，。、~@￥%……&*《》<>「」{}【】()/\\\[\]'\"’\r]/g, '-').replace(/ /g, '-');
+                //const title = "#" + line.toLowerCase().replace(/[:：–\/#？\?$,，]/g, '').replace(/\./g, '').replace(/[_\.\!\+=%^。、~@￥%……&*《》<>「」{}【】()/\\\[\]'\"’\r]/g, '-').replace(/ /g, '-');
+                const title = "#" + generateId(line);
                 const filePath = file.replace('.md', '').replace(path.join(destDir, ""), '');
                 tocItems.push(`${indentation.repeat(level - 1)}- [${tocItem}](${filePath}${title})`);
             }
