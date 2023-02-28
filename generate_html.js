@@ -47,3 +47,4 @@ async function generateHtml(filePath, destDir) {
     return process.exit();
 }
 
+exports.generateHtml = generateHtml;

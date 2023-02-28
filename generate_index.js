@@ -59,3 +59,4 @@ async function generateIndex(destDir) {
     await writeFile(path.join(destDir, 'index.md'), tocItems.join('\n'));
 }
 
+exports.generateIndex = generateIndex;
