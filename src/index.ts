@@ -3,11 +3,12 @@ const fs = require("fs");
 const path = require("path");
 const mume = require("@shd101wyy/mume");
 const { promisify } = require('util');
-
+const yaml = require('js-yaml');
 const readdir = promisify(fs.readdir);
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 const uslug = require("uslug");
+const cheerio = require('cheerio');
 
 function copyDirSync(src, dest) {
     if (!fs.existsSync(dest)) {
@@ -175,7 +176,44 @@ async function doGenerateGithubPages(folderPath, destDir) {
     }
 }
 
-async function generateGithubPages(srcDir, destDir) {
+// Recursively search all HTML files in the given directory
+function insertExtraToHtml(dir, config) {
+    fs.readdirSync(dir).forEach(file => {
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+        if (stat.isDirectory()) {
+            insertExtraToHtml(filePath, config);
+        } else if (path.extname(file) === '.html') {
+            // Manipulate the HTML file
+            manipulateHTML(filePath, config);
+        }
+    });
+}
+
+// Manipulate the HTML file
+function manipulateHTML(filePath, config) {
+    const html = fs.readFileSync(filePath, 'utf8');
+    const $ = cheerio.load(html);
+
+    const yamlConfig = yaml.load(fs.readFileSync(config, 'utf8'));
+    const head = yamlConfig.template.head;
+    const body = yamlConfig.template.body;
+    const foot = yamlConfig.template.foot;
+
+    // Insert the head section
+    $('head').prepend(head);
+
+    // Insert the body section at the beginning of the body
+    $('body').prepend(body);
+
+    // Insert the foot section at the end of the body
+    $('body').append(foot);
+
+    // Write the modified HTML back to the file
+    fs.writeFileSync(filePath, $.html());
+}
+
+async function generateGithubPages(srcDir, destDir, config) {
     if (!fs.existsSync(srcDir)) {
         console.error(`srcDir: ${srcDir} not exists`);
         return;
@@ -189,6 +227,7 @@ async function generateGithubPages(srcDir, destDir) {
         await doGenerateGithubPages(srcDir, destDir);
         await generateIndex(destDir);
         await generateHtml(path.join(destDir, 'index.md'), destDir);
+        insertExtraToHtml(destDir, config);
     } catch (err) {
         console.error(err);
     }

@@ -1,13 +1,15 @@
 {
   "dependencies": {
     "@shd101wyy/mume": "^0.7.5",
+    "cheerio": "^1.0.0-rc.12",
+    "js-yaml": "^4.1.0",
     "os": "^0.1.2",
     "path": "^0.12.7",
     "typescript": "^4.9.5"
   },
   "name": "markdown-to-github-pages",
   "description": "Convert markdown files to github pages with katex support.",
-  "version": "1.0.36",
+  "version": "1.0.38",
   "main": "./out/src/index.js",
   "scripts": {
     "build": "tsc --project ."
