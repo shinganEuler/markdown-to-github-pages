@@ -199,6 +199,11 @@ function manipulateHTML(filePath, config) {
     const head = yamlConfig.template.head;
     const body = yamlConfig.template.body;
     const foot = yamlConfig.template.foot;
+    const title = yamlConfig.title
+    const h1Content = $('h1').text();
+
+    // Change the page title
+    $('title').text(title + " - " + h1Content);
 
     // Insert the head section
     $('head').prepend(head);
