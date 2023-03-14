@@ -192,7 +192,12 @@ function manipulateHTML(filePath, config) {
     const title = yamlConfig.title;
     const h1Content = $('h1').text();
     // Change the page title
-    $('title').text(title + " - " + h1Content);
+    if (h1Content == "") {
+        $('title').text(title);
+    }
+    else {
+        $('title').text(title + " - " + h1Content);
+    }
     // Insert the head section
     $('head').prepend(head);
     // Insert the body section at the beginning of the body
