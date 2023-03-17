@@ -227,5 +227,4 @@ function generateGithubPages(srcDir, destDir, config) {
         }
     });
 }
-exports.generateGithubPages = generateGithubPages;
 //# sourceMappingURL=index.js.map

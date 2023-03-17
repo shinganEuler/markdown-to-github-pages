@@ -245,4 +245,3 @@ async function generateGithubPages(srcDir, destDir, config) {
     }
 }
 
-exports.generateGithubPages = generateGithubPages;
